@@ -54,6 +54,13 @@
   return self;
 }
 
+- (NSString *)authorizationViewControllerClass {
+    if (! _authorizationViewControllerClass) {
+        _authorizationViewControllerClass = @"LIALinkedInAuthorizationViewController";
+    }
+    return _authorizationViewControllerClass;
+}
+
 - (BOOL)validToken {
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
@@ -93,7 +100,8 @@
 }
 
 - (void)getAuthorizationCode:(void (^)(NSString *))success cancel:(void (^)(void))cancel failure:(void (^)(NSError *))failure {
-  LIALinkedInAuthorizationViewController *authorizationViewController = [[LIALinkedInAuthorizationViewController alloc]
+    Class viewControllerClass = NSClassFromString(self.authorizationViewControllerClass);
+  LIALinkedInAuthorizationViewController *authorizationViewController = [[viewControllerClass alloc]
       initWithApplication:
           self.application
                   success:^(NSString *code) {

@@ -52,6 +52,14 @@
  ** ************************************************************************************************ **/
 
 /**
+ * Class name to be for the authorization view controller.  Defaults to 'LIALinkedInAuthorizationViewController', but may 
+ * be set to a subclass.
+ * @return The name of the class to be used as the authorization view controller.
+ * @discussion This is the override point to customize the authorization view controller.
+ **/
+@property (nonatomic, copy) NSString *authorizationViewControllerClass;
+
+/**
  * Returns YES if the current cached token is valid and not expired, NO otherwise.
  * @return The validity of the cached token.
  * @discussion When getting the token via the method `-getAccessToken:success:failure:`, the library is caching the token for further use.
