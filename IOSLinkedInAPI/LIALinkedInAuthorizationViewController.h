@@ -32,6 +32,7 @@ typedef void(^LIAAuthorizationCodeFailureCallback)(NSError *errorReason);
 @interface LIALinkedInAuthorizationViewController : UIViewController
 
 @property(nonatomic, readonly) UIWebView *authenticationWebView;
+@property(nonatomic, readonly) NSDictionary<NSString *, NSString *> *extraHeaders;
 
 /** ************************************************************************************************ **
  * @name Initializers

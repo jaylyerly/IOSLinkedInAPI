@@ -81,7 +81,7 @@ BOOL handlingRedirectURL;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     NSMutableDictionary *tmp = [request.allHTTPHeaderFields mutableCopy];
-    [tmp addEntriesFromDictionary: [self extraHeaders]];
+    [tmp addEntriesFromDictionary:self.extraHeaders];
     request.allHTTPHeaderFields = tmp;
     
     [self.authenticationWebView loadRequest:request];
