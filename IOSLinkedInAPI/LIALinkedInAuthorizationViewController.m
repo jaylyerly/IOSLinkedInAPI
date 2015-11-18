@@ -54,6 +54,10 @@ BOOL handlingRedirectURL;
     return self;
 }
 
+- (NSDictionary *)extraHeaders {
+    return @{};
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -72,7 +76,15 @@ BOOL handlingRedirectURL;
 
     // Needs to go here for compatiblity with 1Password -- WJL
     NSString *linkedIn = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=%@&scope=%@&state=%@&redirect_uri=%@", self.application.clientId, self.application.grantedAccessString, self.application.state, [self.application.redirectURL LIAEncode]];
-    [self.authenticationWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:linkedIn]]];
+    
+    NSURL *url = [NSURL URLWithString:linkedIn];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    NSMutableDictionary *tmp = [request.allHTTPHeaderFields mutableCopy];
+    [tmp addEntriesFromDictionary: [self extraHeaders]];
+    request.allHTTPHeaderFields = tmp;
+    
+    [self.authenticationWebView loadRequest:request];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
 }
